@@ -15,12 +15,10 @@ const App: React.FC = () => {
   const [hearts, setHearts] = useState<BurstHeart[]>([]);
 
   useEffect(() => {
-    // Handle Mouse Movement
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
-    // Handle Touch Movement (for mobile cursor trail)
     const handleTouchMove = (e: TouchEvent) => {
       if (e.touches.length > 0) {
         const touch = e.touches[0];
@@ -48,18 +46,15 @@ const App: React.FC = () => {
     let clientX, clientY;
     
     if ('touches' in e) {
-        // Touch event
         clientX = e.touches[0].clientX;
         clientY = e.touches[0].clientY;
     } else {
-        // Mouse event
         clientX = (e as React.MouseEvent).clientX;
         clientY = (e as React.MouseEvent).clientY;
     }
 
-    // Create a burst of hearts at click/tap position
     const newHearts: BurstHeart[] = [];
-    const count = 5 + Math.floor(Math.random() * 5); // 5-10 hearts
+    const count = 5 + Math.floor(Math.random() * 5); 
     const words = ["Love", "Forever", "You", "Always", "Mine"];
     
     for (let i = 0; i < count; i++) {
@@ -77,7 +72,6 @@ const App: React.FC = () => {
     setHearts(prev => [...prev, ...newHearts]);
   }, [hasEntered]);
 
-  // Animation loop for burst hearts
   useEffect(() => {
     if (hearts.length === 0) return;
 
@@ -89,7 +83,7 @@ const App: React.FC = () => {
             x: heart.x + Math.cos(heart.angle * Math.PI / 180) * heart.speed,
             y: heart.y + Math.sin(heart.angle * Math.PI / 180) * heart.speed,
             life: heart.life - 0.02,
-            speed: heart.speed * 0.95 // Friction
+            speed: heart.speed * 0.95
           }))
           .filter(heart => heart.life > 0)
       );
@@ -104,12 +98,9 @@ const App: React.FC = () => {
       onClick={handleGlobalClick}
       onTouchStart={handleGlobalClick}
     >
-      
-      {/* Background & Effects */}
       <StarBackground mousePosition={mousePosition} />
       <CursorTrail mousePosition={mousePosition} />
 
-      {/* Burst Hearts Overlay */}
       {hearts.map(heart => (
         <div
           key={heart.id}
@@ -129,7 +120,6 @@ const App: React.FC = () => {
         </div>
       ))}
 
-      {/* Logic Layers */}
       <AnimatePresence mode='wait'>
         {!hasEntered && (
           <WelcomeScreen key="welcome" onEnter={handleEnter} />
@@ -145,10 +135,8 @@ const App: React.FC = () => {
             transition={{ duration: 2 }}
             className="relative z-10 w-full"
           >
-            {/* Poem Content - Handles its own internal pages */}
             <PoemSection />
 
-            {/* Footer */}
             <footer className="w-full pb-8 text-center z-20 absolute bottom-0 pointer-events-none">
               <motion.div 
                 initial={{ opacity: 0 }}
@@ -163,7 +151,6 @@ const App: React.FC = () => {
               </motion.div>
             </footer>
 
-            {/* Persistent Music Player */}
             <MusicPlayer isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
           </motion.div>
         )}
