@@ -115,8 +115,8 @@ const App: React.FC = () => {
           key={heart.id}
           className="fixed pointer-events-none z-50 text-rose-500 flex items-center justify-center font-vibes"
           style={{
-            left: heart.x,
-            top: heart.y,
+            left: `${heart.x}px`,
+            top: `${heart.y}px`,
             transform: `translate(-50%, -50%) scale(${heart.scale})`,
             opacity: heart.life,
             textShadow: '0 0 10px rgba(225,29,72,0.5)'
