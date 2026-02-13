@@ -4,22 +4,20 @@ import { ChevronRight, Heart } from 'lucide-react';
 
 // --- Global Background Component ---
 const GlobalLoveBackground = () => {
-  // Generate random positions for background hearts
   const [bgHearts] = useState(() => 
     [...Array(80)].map((_, i) => ({
       id: i,
       top: Math.random() * 100,
       left: Math.random() * 100,
-      size: Math.random() * 12 + 6, // 6px to 18px (Tiny)
+      size: Math.random() * 12 + 6,
       rotation: Math.random() * 360,
       delay: Math.random() * 2,
-      beatDuration: 0.8 + Math.random() * 1.2 // 0.8s to 2s
+      beatDuration: 0.8 + Math.random() * 1.2
     }))
   );
 
   return (
     <div className="absolute inset-0 pointer-events-none -z-5 overflow-hidden">
-        {/* Scattered Tiny Beating Hearts */}
         {bgHearts.map((heart) => (
              <motion.div
                key={heart.id}
@@ -33,20 +31,11 @@ const GlobalLoveBackground = () => {
                    scale: { duration: heart.beatDuration, repeat: Infinity, ease: "easeInOut", delay: heart.delay }
                }}
                className="absolute text-rose-500 mix-blend-screen"
-               style={{
-                 top: `${heart.top}%`,
-                 left: `${heart.left}%`,
-               }}
+               style={{ top: `${heart.top}%`, left: `${heart.left}%` }}
              >
-                <Heart 
-                    size={heart.size} 
-                    className="fill-rose-600" 
-                    strokeWidth={0}
-                />
+                <Heart size={heart.size} className="fill-rose-600" strokeWidth={0} />
              </motion.div>
         ))}
-        
-        {/* Elegant "Love" Text Watermark */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rotate-[-12deg] mix-blend-screen pointer-events-none">
              <span className="font-vibes text-[35vmin] text-rose-300 opacity-[0.03] select-none whitespace-nowrap blur-sm">Love</span>
         </div>
@@ -54,41 +43,28 @@ const GlobalLoveBackground = () => {
   );
 };
 
-// --- Background Vector Components (Per Slide) ---
-
-// 1. Time / Beginning: Infinity symbol entwined with a heart
+// --- Background Vector Components ---
 const BgGraphic1 = () => (
-  <svg viewBox="0 0 500 500" className="absolute w-[100%] h-[100%] opacity-20 text-rose-900 fill-none stroke-current stroke-[1.5]">
+  <svg viewBox="0 0 500 500" className="absolute w-full h-full opacity-20 text-rose-900 fill-none stroke-current stroke-[1.5]">
     <defs>
       <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
         <stop offset="0%" style={{ stopColor: 'rgb(88, 28, 135)', stopOpacity: 0.5 }} />
         <stop offset="100%" style={{ stopColor: 'rgb(225, 29, 72)', stopOpacity: 0.8 }} />
       </linearGradient>
     </defs>
-    {/* Infinity Shape */}
-    <path d="M150,250 C150,150 250,150 250,250 C250,350 350,350 350,250 C350,150 250,150 250,250 C250,350 150,350 150,250 Z" 
-          className="animate-pulse-slow" stroke="url(#grad1)" />
-    {/* Central Heart */}
+    <path d="M150,250 C150,150 250,150 250,250 C250,350 350,350 350,250 C350,150 250,150 250,250 C250,350 150,350 150,250 Z" className="animate-pulse-slow" stroke="url(#grad1)" />
     <path d="M250,270 C220,240 220,200 250,200 C280,200 280,240 250,270" fill="currentColor" className="opacity-30" />
   </svg>
 );
 
-// 2. Stars: Constellation forming a heart
 const BgGraphic2 = () => (
-  <svg viewBox="0 0 500 500" className="absolute w-[100%] h-[100%] opacity-20 text-rose-800 fill-none stroke-current stroke-1">
-    {/* Star trails */}
+  <svg viewBox="0 0 500 500" className="absolute w-full h-full opacity-20 text-rose-800 fill-none stroke-current stroke-1">
     <path d="M100,100 Q250,50 400,100" strokeDasharray="4,4" opacity="0.5"/>
-    
-    {/* Heart Constellation */}
     <path d="M250,350 C150,300 150,150 250,150 C350,150 350,300 250,350 Z" strokeDasharray="2,6" strokeWidth="2" />
-    
-    {/* Stars */}
     <circle cx="250" cy="150" r="4" fill="currentColor" className="animate-pulse" />
     <circle cx="180" cy="200" r="3" fill="currentColor" />
     <circle cx="320" cy="200" r="3" fill="currentColor" />
     <circle cx="250" cy="350" r="4" fill="currentColor" className="animate-pulse" />
-    
-    {/* Connecting lines to stars */}
     <line x1="250" y1="150" x2="180" y2="200" strokeWidth="0.5" />
     <line x1="250" y1="150" x2="320" y2="200" strokeWidth="0.5" />
     <line x1="180" y1="200" x2="250" y2="350" strokeWidth="0.5" />
@@ -96,32 +72,19 @@ const BgGraphic2 = () => (
   </svg>
 );
 
-// 3. Searching: Two winding paths meeting at a heart
 const BgGraphic3 = () => (
-  <svg viewBox="0 0 500 500" className="absolute w-[100%] h-[100%] opacity-15 text-rose-600 fill-none stroke-current stroke-[1.5]">
-    {/* Path 1 */}
+  <svg viewBox="0 0 500 500" className="absolute w-full h-full opacity-15 text-rose-600 fill-none stroke-current stroke-[1.5]">
     <path d="M50,450 Q150,400 150,300 T250,200" strokeDasharray="10,5" />
-    {/* Path 2 */}
     <path d="M450,450 Q350,400 350,300 T250,200" strokeDasharray="10,5" />
-    
-    {/* Destination Heart */}
-    <path d="M250,200 m-25,-20 a25,25 0 1,1 50,0 a25,25 0 1,1 -50,0" 
-          fill="currentColor" className="opacity-50 animate-bounce" style={{ animationDuration: '3s' }} />
+    <path d="M250,200 m-25,-20 a25,25 0 1,1 50,0 a25,25 0 1,1 -50,0" fill="currentColor" className="opacity-50 animate-bounce" style={{ animationDuration: '3s' }} />
   </svg>
 );
 
-// 4. Meeting: Abstract couple / Interlocking hearts
 const BgGraphic4 = () => (
-  <svg viewBox="0 0 500 500" className="absolute w-[100%] h-[100%] opacity-20 text-rose-700 fill-none stroke-current stroke-2">
-     {/* Heart 1 */}
+  <svg viewBox="0 0 500 500" className="absolute w-full h-full opacity-20 text-rose-700 fill-none stroke-current stroke-2">
      <path d="M230,250 C180,200 180,100 250,100 C280,100 300,130 300,150" strokeDasharray="5,5"/> 
-     
-     {/* Heart 2 Interlocking */}
      <path d="M270,250 C320,200 320,100 250,100 C220,100 200,130 200,150" strokeDasharray="5,5" />
-
-     {/* United Heart Shape */}
-     <path d="M250,180 C200,180 150,220 150,280 C150,350 250,420 250,420 C250,420 350,350 350,280 C350,220 300,180 250,180 Z" 
-           fill="currentColor" className="opacity-10" />
+     <path d="M250,180 C200,180 150,220 150,280 C150,350 250,420 250,420 C250,420 350,350 350,280 C350,220 300,180 250,180 Z" fill="currentColor" className="opacity-10" />
   </svg>
 );
 
@@ -140,61 +103,41 @@ const BgGraphicFinal = () => (
   </div>
 );
 
-
-// --- Data ---
 const poemSteps = [
   {
     id: 0,
-    lines: [
-      "Somewhere at the beginning of time,",
-      "I think your heart was a part of mine."
-    ],
+    lines: ["Somewhere at the beginning of time,", "I think your heart was a part of mine."],
     buttonText: "To the Journey",
     Graphic: BgGraphic1
   },
   {
     id: 1,
-    lines: [
-      "Two souls fallen from the same star",
-      "found two different people far apart."
-    ],
+    lines: ["Two souls fallen from the same star", "found two different people far apart."],
     buttonText: "Follow the Stars",
     Graphic: BgGraphic2
   },
   {
     id: 2,
-    lines: [
-      "All my life I looked for you",
-      "and all yours you've been searching too."
-    ],
+    lines: ["All my life I looked for you", "and all yours you've been searching too."],
     buttonText: "Almost There",
     Graphic: BgGraphic3
   },
   {
     id: 3,
-    lines: [
-      "Today we met on second first time",
-      "on the ground instead of the sky."
-    ],
+    lines: ["Today we met on second first time", "on the ground instead of the sky."],
     buttonText: "Our Destiny",
     Graphic: BgGraphic4
   },
   {
     id: 4,
-    lines: [
-      "I didn't know it,",
-      "I couldn't see that..."
-    ],
+    lines: ["I didn't know it,", "I couldn't see that..."],
     buttonText: "The Revelation",
     Graphic: BgGraphic2
   },
   {
     id: 5,
     isFinal: true,
-    lines: [
-      "Meeting you was meeting the",
-      "Missing part of me"
-    ],
+    lines: ["Meeting you was meeting the", "Missing part of me"],
     buttonText: "",
     Graphic: BgGraphicFinal
   }
@@ -206,7 +149,6 @@ const PoemSection: React.FC = () => {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      // Gentle parallax effect
       const x = (e.clientX / window.innerWidth - 0.5) * 15;
       const y = (e.clientY / window.innerHeight - 0.5) * 15;
       setOffset({ x, y });
@@ -216,9 +158,7 @@ const PoemSection: React.FC = () => {
   }, []);
 
   const nextStep = () => {
-    if (step < poemSteps.length - 1) {
-      setStep(step + 1);
-    }
+    if (step < poemSteps.length - 1) setStep(step + 1);
   };
 
   const currentData = poemSteps[step];
@@ -226,11 +166,7 @@ const PoemSection: React.FC = () => {
 
   return (
     <div className="w-full min-h-screen relative flex flex-col items-center justify-center overflow-hidden">
-      
-      {/* Global Background Elements (Persistent) */}
       <GlobalLoveBackground />
-
-      {/* Slide Specific Background Layer (Changes per step) */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none -z-10 transition-opacity duration-1000">
         <AnimatePresence mode="popLayout">
           <motion.div
@@ -246,7 +182,6 @@ const PoemSection: React.FC = () => {
         </AnimatePresence>
       </div>
 
-      {/* Floating Name Watermark (On every page) */}
       <div className="absolute top-8 left-0 w-full flex justify-center pointer-events-none z-20 mix-blend-overlay opacity-70">
          <motion.div 
            initial={{ opacity: 0, y: -20 }}
@@ -261,7 +196,6 @@ const PoemSection: React.FC = () => {
          </motion.div>
       </div>
 
-      {/* Main Content Card */}
       <AnimatePresence mode='wait'>
         <motion.div
           key={step}
@@ -273,7 +207,6 @@ const PoemSection: React.FC = () => {
           style={{ transform: `translate(${offset.x}px, ${offset.y}px)` }}
         >
             {currentData.isFinal ? (
-                /* FINAL SLIDE LAYOUT */
                 <div className="flex flex-col items-center">
                     <motion.div
                       initial={{ scale: 0.8, opacity: 0 }}
@@ -307,7 +240,6 @@ const PoemSection: React.FC = () => {
                     </motion.div>
                 </div>
             ) : (
-                /* STANDARD SLIDE LAYOUT */
                 <div className="space-y-4">
                      <div className="space-y-8">
                         {currentData.lines.map((line, idx) => (
@@ -328,7 +260,6 @@ const PoemSection: React.FC = () => {
                         ))}
                      </div>
 
-                     {/* Heart Divider on Every Page */}
                      <motion.div
                         initial={{ width: 0, opacity: 0 }}
                         animate={{ width: "100%", opacity: 1 }}
@@ -361,7 +292,6 @@ const PoemSection: React.FC = () => {
         </motion.div>
       </AnimatePresence>
 
-      {/* Progress Indicator (Dots) */}
       <div className="absolute bottom-12 left-0 w-full flex justify-center gap-4 z-20">
          {poemSteps.map((s, i) => (
              <div 
@@ -373,7 +303,6 @@ const PoemSection: React.FC = () => {
              />
          ))}
       </div>
-
     </div>
   );
 };
